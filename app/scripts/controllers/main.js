@@ -8,10 +8,30 @@
  * Controller of the pboxWebApp
  */
 angular.module('pboxWebApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
+  .controller('MainCtrl', ['locker', function (locker) {
+    this.sites = [
+      {
+        title : 'Google' ,
+        url : 'https://google.com',
+        username : 'xjodoin',
+        password:'123456'
+      },
+      {
+        title : 'Google' ,
+        url : 'https://google.com',
+        username : 'x@cakemail.com',
+        password:'123456'
+      },
+      {
+        title : 'Facebook' ,
+        url : 'https://facebook.com',
+        username : 'xjodoin',
+        password:'123456'
+      }
     ];
-  });
+
+    this.test = function (tocrypt) {
+        alert(locker.encrypt(tocrypt,'this is my pass'));
+    };
+
+  }]);
