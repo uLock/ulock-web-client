@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'angular-clipboard'
+    'angular-clipboard',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider

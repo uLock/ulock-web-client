@@ -8,8 +8,8 @@
  * Controller of the pboxWebApp
  */
 angular.module('pboxWebApp')
-  .controller('MainCtrl', ['locker', function (locker) {
-    this.sites = [
+  .controller('MainCtrl', ['locker','$scope', '$uibModal','$log', function (locker, $scope, $uibModal,$log) {
+    var sites = [
       {
         title : 'Google' ,
         url : 'https://google.com',
@@ -30,8 +30,43 @@ angular.module('pboxWebApp')
       }
     ];
 
-    this.test = function (tocrypt) {
-        alert(locker.encrypt(tocrypt,'this is my pass'));
+    $scope.sites = sites;
+
+    $scope.add = function (size) {
+        var modalInstance = $uibModal.open({
+         animation: true,
+         templateUrl: 'myModalContent.html',
+         controller: 'ModalInstanceCtrl',
+         size: size,
+         resolve: {
+           items: function () {
+             return $scope.sites;
+           }
+         }
+       });
+
+       modalInstance.result.then(function (selectedItem) {
+          $scope.selected = selectedItem;
+        }, function () {
+          $log.info('Modal dismissed at: ' + new Date());
+        });
+
     };
 
-  }]);
+}]);
+
+angular.module('pboxWebApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+
+  $scope.items = items;
+  $scope.selected = {
+    item: $scope.items[0]
+  };
+
+  $scope.ok = function () {
+    $uibModalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
