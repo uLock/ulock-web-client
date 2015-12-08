@@ -8,29 +8,14 @@
  * Controller of the pboxWebApp
  */
 angular.module('pboxWebApp')
-  .controller('MainCtrl', ['locker','$scope', '$uibModal','$log', function (locker, $scope, $uibModal,$log) {
-    var sites = [
-      {
-        title : 'Google' ,
-        url : 'https://google.com',
-        username : 'xjodoin',
-        password:'123456'
-      },
-      {
-        title : 'Google' ,
-        url : 'https://google.com',
-        username : 'x@cakemail.com',
-        password:'123456'
-      },
-      {
-        title : 'Facebook' ,
-        url : 'https://facebook.com',
-        username : 'xjodoin',
-        password:'123456'
-      }
-    ];
+  .controller('MainCtrl', ['locker','$scope', '$uibModal','$log','$routeParams', function (locker, $scope, $uibModal,$log,$routeParams) {
 
-    $scope.sites = sites;
+    var accountKey = $routeParams.accountKey;
+
+    locker.load(accountKey, function (err,sites) {
+      $scope.sites = sites;
+    });
+
 
     $scope.add = function (size) {
         var modalInstance = $uibModal.open({
@@ -39,14 +24,14 @@ angular.module('pboxWebApp')
          controller: 'ModalInstanceCtrl',
          size: size,
          resolve: {
-           items: function () {
-             return $scope.sites;
+           site : function () {
+             return $scope.selectedSite;
            }
          }
        });
 
-       modalInstance.result.then(function (selectedItem) {
-          $scope.selected = selectedItem;
+       modalInstance.result.then(function (site) {
+          $scope.sites.push(site);
         }, function () {
           $log.info('Modal dismissed at: ' + new Date());
         });
@@ -55,15 +40,12 @@ angular.module('pboxWebApp')
 
 }]);
 
-angular.module('pboxWebApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+angular.module('pboxWebApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, site) {
 
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
+  $scope.site = site || {};
 
   $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
+    $uibModalInstance.close($scope.site);
   };
 
   $scope.cancel = function () {

@@ -45,4 +45,33 @@ angular.module('pboxWebApp')
          decipher.finish();
          return decipher.output.toString();
      };
+
+     this.load = function (accountKey, callback) {
+       var sites = [
+         {
+           title : 'Google' ,
+           url : 'https://google.com',
+           username : 'xjodoin',
+           password:'123456'
+         },
+         {
+           title : 'Google' ,
+           url : 'https://google.com',
+           username : 'x@cakemail.com',
+           password:'123456'
+         },
+         {
+           title : 'Facebook' ,
+           url : 'https://facebook.com',
+           username : 'xjodoin',
+           password:'123456'
+         }
+       ];
+       callback(null,sites);
+     };
+
+     this.createAccountKey = function (email,password) {
+       return 'toto';
+     };
+
   });
