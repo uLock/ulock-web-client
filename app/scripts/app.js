@@ -25,9 +25,14 @@ angular
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
-      .when('/locker/:accountKey', {
+      .when('/vault/:vaultKey', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      })
+      .when('/register', {
+        templateUrl: 'views/register.html',
+        controller: 'RegisterCtrl',
+        controllerAs: 'register'
       })
       .otherwise({
         redirectTo: '/'

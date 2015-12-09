@@ -8,12 +8,18 @@
  * Controller of the pboxWebApp
  */
 angular.module('pboxWebApp')
-  .controller('MainCtrl', ['locker','$scope', '$uibModal','$log','$routeParams', function (locker, $scope, $uibModal,$log,$routeParams) {
+  .controller('MainCtrl', ['locker','$scope', '$uibModal','$log','$routeParams','$location', function (locker, $scope, $uibModal,$log,$routeParams,$location) {
 
-    var accountKey = $routeParams.accountKey;
+    var vaultKey = $routeParams.vaultKey;
 
-    locker.load(accountKey, function (err,sites) {
-      $scope.sites = sites;
+    locker.load(vaultKey, function (err,sites) {
+      if(err) {
+        $location.path('/?error');
+      }
+      else {
+        $scope.sites = sites;
+      }
+
     });
 
 
