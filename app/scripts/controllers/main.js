@@ -18,6 +18,7 @@ angular.module('pboxWebApp')
       }
       else {
         $scope.sites = sites;
+        $scope.$apply();
       }
 
     });
@@ -37,7 +38,10 @@ angular.module('pboxWebApp')
        });
 
        modalInstance.result.then(function (site) {
-          $scope.sites.push(site);
+         locker.add(site,function(err,newSite) {
+             $scope.sites.push(newSite);
+         });
+
         }, function () {
           $log.info('Modal dismissed at: ' + new Date());
         });

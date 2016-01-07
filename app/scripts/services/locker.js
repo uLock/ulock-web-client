@@ -1,6 +1,12 @@
 'use strict';
 
-var uLockApi = 'http://localhost/v1';
+var db , sites ;
+
+var sha256 = function (val) {
+  var md = forge.md.sha256.create();
+  md.update(val);
+  return md.digest().toHex();
+};
 
 /**
  * @ngdoc service
@@ -10,9 +16,7 @@ var uLockApi = 'http://localhost/v1';
  * Service in the pboxWebApp.
  */
 angular.module('pboxWebApp')
-  .service('locker', function ($http) {
-
-      var masterPassword;
+  .service('locker', function () {
 
       /*
       * Encrypt a message with a passphrase or password
@@ -58,11 +62,50 @@ angular.module('pboxWebApp')
      };
 
      this.load = function (accountKey, callback) {
-       $http.get(uLockApi+"/vault/"+accountKey).then(function success (response) {
-         callback(null,response.sites);
-       },function error (err) {
-         callback(err);
-       });
+
+       var info = JSON.parse(sessionStorage.getItem(accountKey));
+       var email = info.email;
+       var password = sha256(info.password);
+
+       db = new Kinto({
+          remote: "https://api.ulock.co/v1",
+          headers: {
+            Authorization: "Basic " + btoa('xjodoin:totopass')
+          }
+        });
+
+       sites = db.collection("sites");
+
+       var load = function () {
+         sites.list().then(function (res) {
+           callback(null,res.data);
+         }).catch(callback);
+       };
+
+       sites.sync({
+          strategy: Kinto.syncStrategy.SERVER_WINS
+        })
+          .then(result => {
+            console.log(result);
+            load();
+          })
+          .catch(error => {
+            console.error(error);
+            load();
+          });
+
+
+     };
+
+     this.add = function (site,callback) {
+       sites.create(site)
+        .then(function (res) {
+          callback(null,res.data);
+          sites.sync({
+             strategy: Kinto.syncStrategy.SERVER_WINS
+           });
+        })
+        .catch(console.error.bind(console));
      };
 
      this.create = function (email,password, callback) {
@@ -70,18 +113,13 @@ angular.module('pboxWebApp')
          key : createAccountKey(email,password),
          email : email
        };
-       $http.post(uLockApi+"/vault",vaultInfo).then(function success (response) {
-         callback(null,response);
-       },function error (err) {
-         callback(err);
-       });
+
      };
 
      var createAccountKey = function (email,password) {
-        masterPassword = password;
-        var md = forge.md.sha256.create();
-        md.update(email,password);
-        return md.digest().toHex();
+        var key = sha256(email+password);
+        sessionStorage.setItem(key, JSON.stringify({email:email,password:password}));
+        return key;
      };
 
      this.createAccountKey = createAccountKey;
