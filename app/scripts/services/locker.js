@@ -1,12 +1,18 @@
 'use strict';
 
-var db , sites ;
-
 var sha256 = function (val) {
   var md = forge.md.sha256.create();
   md.update(val);
   return md.digest().toHex();
 };
+
+var rootApi = 'http://localhost:8080';
+
+var pki = forge.pki;
+var rsa = pki.rsa;
+
+var masterPassword;
+var settings;
 
 /**
  * @ngdoc service
@@ -16,7 +22,7 @@ var sha256 = function (val) {
  * Service in the pboxWebApp.
  */
 angular.module('pboxWebApp')
-  .service('locker', function () {
+  .service('locker', function ($http) {
 
       /*
       * Encrypt a message with a passphrase or password
@@ -43,6 +49,8 @@ angular.module('pboxWebApp')
 
      };
 
+     this.encrypt = encrypt;
+
      /*
       * Decrypt cipher text using a password or passphrase and a corresponding salt and iv
       *
@@ -52,76 +60,83 @@ angular.module('pboxWebApp')
       * @param    string (Base64) iv
       * @return   string
       */
-     var decrypt = function(cipherText, salt, iv) {
-         var key = forge.pkcs5.pbkdf2(masterPassword, forge.util.decode64(salt), 40, 16);
+     var decrypt = function(encryptData) {
+         var key = forge.pkcs5.pbkdf2(masterPassword, forge.util.decode64(encryptData.salt), 40, 16);
          var decipher = forge.cipher.createDecipher('AES-CBC', key);
-         decipher.start({iv: forge.util.decode64(iv)});
-         decipher.update(forge.util.createBuffer(forge.util.decode64(cipherText)));
+         decipher.start({iv: forge.util.decode64(encryptData.iv)});
+         decipher.update(forge.util.createBuffer(forge.util.decode64(encryptData.cipher_text)));
          decipher.finish();
          return decipher.output.toString();
      };
 
-     this.load = function (accountKey, callback) {
+     this.decrypt = decrypt;
 
-       var info = JSON.parse(sessionStorage.getItem(accountKey));
-       var email = info.email;
-       var password = sha256(info.password);
+     var encryptEntity = function (entity) {
+       var newEntity = angular.copy(entity);
+       newEntity.data = encrypt(JSON.stringify(entity.data));
+       return newEntity;
+     };
 
-       db = new Kinto({
-          remote: "https://api.ulock.co/v1",
-          headers: {
-            Authorization: "Basic " + btoa('xjodoin:totopass')
+     this.encryptEntity = encryptEntity;
+
+     var decryptEntity = function (entity) {
+       var newEntity = angular.copy(entity);
+       newEntity.data = JSON.parse(decrypt(entity.data));
+       return newEntity;
+     };
+
+     this.decryptEntity = decryptEntity;
+
+     var createNewAccount = function (callback) {
+
+        // generate an RSA key pair synchronously
+        var keypair = rsa.generateKeyPair({bits: 2048, e: 0x10001});
+        settings = {
+          publicKey: pki.publicKeyToPem(keypair.publicKey),
+          data: {
+            privateKey: pki.privateKeyToPem(keypair.privateKey)
           }
+        };
+
+        var newSettings = encryptEntity(settings);
+
+        $http.post(rootApi+'/settings',newSettings).then(function(response) {
+            var encryptSettings = response.data;
+            settings = decryptEntity(encryptSettings);
+            callback(true);
         });
 
-       sites = db.collection("sites");
-
-       var load = function () {
-         sites.list().then(function (res) {
-           callback(null,res.data);
-         }).catch(callback);
-       };
-
-       sites.sync({
-          strategy: Kinto.syncStrategy.SERVER_WINS
-        })
-          .then(result => {
-            console.log(result);
-            load();
-          })
-          .catch(error => {
-            console.error(error);
-            load();
-          });
-
-
      };
 
-     this.add = function (site,callback) {
-       sites.create(site)
-        .then(function (res) {
-          callback(null,res.data);
-          sites.sync({
-             strategy: Kinto.syncStrategy.SERVER_WINS
-           });
-        })
-        .catch(console.error.bind(console));
+     this.isOpen = function () {
+       return masterPassword && settings;
      };
 
-     this.create = function (email,password, callback) {
-       var vaultInfo = {
-         key : createAccountKey(email,password),
-         email : email
-       };
+     this.open = function (masterKey, callback) {
+       masterPassword = masterKey;
+
+       $http.get(rootApi+'/settings').then(function success(response) {
+         var encryptSettings = response.data;
+         if(encryptSettings.id) {
+           //try to decrypt data to test the masterPassword
+           try {
+             var decrypted = decryptEntity(encryptSettings);
+               settings = decrypted;
+               callback(true);
+           } catch (ex) {
+              alert('fail to decrypt');
+           }
+
+         } else {
+           //new account
+           //TODO add confirm masterKey
+           createNewAccount(callback);
+
+         }
+       },function error(response) {
+         callback(false);
+       });
 
      };
-
-     var createAccountKey = function (email,password) {
-        var key = sha256(email+password);
-        sessionStorage.setItem(key, JSON.stringify({email:email,password:password}));
-        return key;
-     };
-
-     this.createAccountKey = createAccountKey;
 
   });

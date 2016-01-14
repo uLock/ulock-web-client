@@ -64,14 +64,9 @@ module.config(function($httpProvider, $routeProvider) {
             templateUrl: 'views/login.html',
             controller: 'LoginCtrl'
         })
-        .when('/vault/:vaultKey', {
+        .when('/site', {
             templateUrl: 'views/main.html',
             controller: 'MainCtrl'
-        })
-        .when('/register', {
-            templateUrl: 'views/register.html',
-            controller: 'RegisterCtrl',
-            controllerAs: 'register'
         })
         .otherwise({
             redirectTo: '/'

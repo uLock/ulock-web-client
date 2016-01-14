@@ -3,26 +3,26 @@
             <h3 class="modal-title">New password</h3>
         </div>
         <div class="modal-body">
-            <form>
+            <form ng-submit="ok()">
               <div class="form-group">
                 <label>Title</label>
-                <input type="text" class="form-control" ng-model="site.title">
+                <input type="text" class="form-control" ng-model="site.data.title">
               </div>
               <div class="form-group">
                 <label>Website URL</label>
-                <input type="text" class="form-control" ng-model="site.url">
+                <input type="text" class="form-control" ng-model="site.data.url">
               </div>
               <div class="form-group">
                 <label>Username</label>
-                <input type="text" class="form-control" ng-model="site.username">
+                <input type="text" class="form-control" ng-model="site.data.username">
               </div>
               <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" ng-model="site.password">
+                <input type="password" class="form-control" ng-model="site.data.password">
               </div>
               <div class="form-group">
                 <label>Confirm password</label>
-                <input type="password" class="form-control" ng-model="site.ConfirmPassword">
+                <input type="password" class="form-control" ng-model="confirmPassword">
               </div>
             </form>
         </div>
@@ -51,9 +51,9 @@
     <table class="table table-striped table-hover">
       <tbody>
         <tr ng-repeat="site in sites">
-          <th>{{site.title}}</th>
-          <td>{{site.username}}  <button class="btn btn-default btn-xs" clipboard text="site.username"><i class="fa fa-clipboard"></i></button></td>
-          <td>**** <button class="btn btn-default btn-xs" clipboard text="site.password"><i class="fa fa-clipboard"></i></button></td>
+          <th>{{site.data.title}}</th>
+          <td>{{site.data.username}}  <button class="btn btn-default btn-xs" clipboard text="site.data.username"><i class="fa fa-clipboard"></i></button></td>
+          <td>**** <button class="btn btn-default btn-xs" clipboard text="site.data.password"><i class="fa fa-clipboard"></i></button></td>
           <td>action</td>
         </tr>
       </tbody>

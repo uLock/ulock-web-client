@@ -9,8 +9,16 @@
  */
 angular.module('pboxWebApp')
   .controller('LoginCtrl', function ($scope,locker,$location) {
-    $scope.login = function (email,password) {
-      var vaultKey = locker.createAccountKey(email,password);
-      $location.path('/vault/'+vaultKey);
+
+    $scope.open = function (masterpassword) {
+      locker.open(masterpassword, function (success) {
+          if(success) {
+            $location.path('/site');
+          }
+          else {
+            alert('invalid!');
+          }
+      });
+
     };
   });
