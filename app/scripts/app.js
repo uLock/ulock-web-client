@@ -16,7 +16,8 @@ var module = angular.module('pboxWebApp', [
     'ngSanitize',
     'ngTouch',
     'angular-clipboard',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'services.config'
 ]);
 
 

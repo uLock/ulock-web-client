@@ -1,7 +1,5 @@
 'use strict';
 
-var rootApi = 'http://localhost:8080';
-
 /**
  * @ngdoc function
  * @name pboxWebApp.controller:MainCtrl
@@ -10,7 +8,7 @@ var rootApi = 'http://localhost:8080';
  * Controller of the pboxWebApp
  */
 angular.module('pboxWebApp')
-  .controller('MainCtrl', ['locker','$scope', '$uibModal','$log','$routeParams','$location','$http', function (locker, $scope, $uibModal,$log,$routeParams,$location,$http) {
+  .controller('MainCtrl', ['locker','$scope', '$uibModal','$log','$routeParams','$location','$http','configuration', function (locker, $scope, $uibModal,$log,$routeParams,$location,$http,configuration) {
 
     if(!locker.isOpen()) {
       $location.path('/');
@@ -18,7 +16,7 @@ angular.module('pboxWebApp')
 
     $scope.sites = [];
 
-    $http.get(rootApi+"/site").then(function(response) {
+    $http.get(configuration.ulockApi+"/site").then(function(response) {
       var encryptedSites = response.data;
       encryptedSites.forEach(function (encryptedSite) {
         $scope.sites.push(locker.decryptEntity(encryptedSite));
@@ -27,7 +25,7 @@ angular.module('pboxWebApp')
 
     var saveNewSite = function (site,callback) {
       var encryptedSite = locker.encryptEntity(site);
-      $http.post(rootApi+'/site',encryptedSite).then(function(response) {
+      $http.post(configuration.ulockApi+'/site',encryptedSite).then(function(response) {
         callback(locker.decryptEntity(response.data));
       },function (err) {
         console.log('Error!!');

@@ -6,8 +6,6 @@ var sha256 = function (val) {
   return md.digest().toHex();
 };
 
-var rootApi = 'http://localhost:8080';
-
 var pki = forge.pki;
 var rsa = pki.rsa;
 
@@ -22,7 +20,7 @@ var settings;
  * Service in the pboxWebApp.
  */
 angular.module('pboxWebApp')
-  .service('locker', function ($http) {
+  .service('locker', function ($http, configuration) {
 
       /*
       * Encrypt a message with a passphrase or password
@@ -100,7 +98,7 @@ angular.module('pboxWebApp')
 
         var newSettings = encryptEntity(settings);
 
-        $http.post(rootApi+'/settings',newSettings).then(function(response) {
+        $http.post(configuration.ulockApi+'/settings',newSettings).then(function(response) {
             var encryptSettings = response.data;
             settings = decryptEntity(encryptSettings);
             callback(true);
@@ -115,7 +113,7 @@ angular.module('pboxWebApp')
      this.open = function (masterKey, callback) {
        masterPassword = masterKey;
 
-       $http.get(rootApi+'/settings').then(function success(response) {
+       $http.get(configuration.ulockApi+'/settings').then(function success(response) {
          var encryptSettings = response.data;
          if(encryptSettings.id) {
            //try to decrypt data to test the masterPassword
