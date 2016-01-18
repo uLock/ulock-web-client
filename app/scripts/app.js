@@ -44,14 +44,18 @@ angular.element(document).ready(function($http) {
     keycloakAuth.init({
         onLoad: 'login-required'
     }).success(function() {
-        console.log('here login');
         auth.loggedIn = true;
         auth.authz = keycloakAuth;
-        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/tokens/logout?redirect_uri=http://localhost:8080/angular-cors-product/index.html";
+        auth.logoutUrl = keycloakAuth.createLogoutUrl();
         module.factory('Auth', function() {
             return auth;
         });
-        angular.bootstrap(document, ["pboxWebApp"]);
+
+        auth.authz.loadUserProfile().success(function(profile){
+             auth.profile = profile;
+             angular.bootstrap(document, ["pboxWebApp"]);
+            });
+
     }).error(function() {
         alert("failed to login");
     });
@@ -111,4 +115,9 @@ module.factory('authInterceptor', function($q, Auth) {
       return $q.reject(response);
     }
   };
+});
+
+module.controller('GlobalCtrl', function ($scope,Auth) {
+  $scope.name = Auth.profile.firstName;
+  $scope.logoutUrl = Auth.logoutUrl;
 });
