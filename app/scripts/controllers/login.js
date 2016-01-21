@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pboxWebApp.controller:AboutCtrl
+ * @name ulockWebApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the pboxWebApp
+ * Controller of the ulockWebApp
  */
-angular.module('pboxWebApp')
+angular.module('ulockWebApp')
   .controller('LoginCtrl', function ($scope,locker,$location) {
 
     $scope.open = function (masterpassword) {

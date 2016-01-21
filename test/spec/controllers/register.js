@@ -3,7 +3,7 @@
 describe('Controller: RegisterCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('pboxWebApp'));
+  beforeEach(module('ulockWebApp'));
 
   var RegisterCtrl,
     scope;

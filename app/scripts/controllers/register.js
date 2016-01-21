@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pboxWebApp.controller:RegisterCtrl
+ * @name ulockWebApp.controller:RegisterCtrl
  * @description
  * # RegisterCtrl
- * Controller of the pboxWebApp
+ * Controller of the ulockWebApp
  */
-angular.module('pboxWebApp')
+angular.module('ulockWebApp')
   .controller('RegisterCtrl', function ($scope,locker,$location) {
     $scope.register = function (email,pass,confirm) {
       if(pass === confirm) {

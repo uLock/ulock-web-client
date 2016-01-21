@@ -3,7 +3,7 @@
 describe('Service: locker', function () {
 
   // load the service's module
-  beforeEach(module('pboxWebApp'));
+  beforeEach(module('ulockWebApp'));
 
   // instantiate service
   var locker;

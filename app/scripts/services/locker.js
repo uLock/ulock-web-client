@@ -14,12 +14,12 @@ var settings;
 
 /**
  * @ngdoc service
- * @name pboxWebApp.locker
+ * @name ulockWebApp.locker
  * @description
  * # locker
- * Service in the pboxWebApp.
+ * Service in the ulockWebApp.
  */
-angular.module('pboxWebApp')
+angular.module('ulockWebApp')
   .service('locker', function ($http, configuration) {
 
       /*

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc overview
- * @name pboxWebApp
+ * @name ulockWebApp
  * @description
- * # pboxWebApp
+ * # ulockWebApp
  *
  * Main module of the application.
  */
-var module = angular.module('pboxWebApp', [
+var module = angular.module('ulockWebApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -17,21 +17,14 @@ var module = angular.module('pboxWebApp', [
     'ngTouch',
     'angular-clipboard',
     'ui.bootstrap',
+    'patternfly',
     'services.config'
 ]);
 
 
 var auth = {};
-var logout = function() {
-    console.log('*** LOGOUT');
-    auth.loggedIn = false;
-    auth.authz = null;
-    window.location = auth.logoutUrl;
-};
-
 
 angular.element(document).ready(function($http) {
-    console.log("*** here");
 
     var keycloakAuth = new Keycloak({
       url: 'https://accounts.ulock.co/auth',
@@ -46,14 +39,13 @@ angular.element(document).ready(function($http) {
     }).success(function() {
         auth.loggedIn = true;
         auth.authz = keycloakAuth;
-        auth.logoutUrl = keycloakAuth.createLogoutUrl();
         module.factory('Auth', function() {
             return auth;
         });
 
         auth.authz.loadUserProfile().success(function(profile){
              auth.profile = profile;
-             angular.bootstrap(document, ["pboxWebApp"]);
+             angular.bootstrap(document, ["ulockWebApp"]);
             });
 
     }).error(function() {
@@ -119,5 +111,6 @@ module.factory('authInterceptor', function($q, Auth) {
 
 module.controller('GlobalCtrl', function ($scope,Auth) {
   $scope.name = Auth.profile.firstName;
-  $scope.logoutUrl = Auth.logoutUrl;
+  $scope.logoutUrl = Auth.authz.createLogoutUrl();
+  $scope.accountUrl = Auth.authz.createAccountUrl();
 });
