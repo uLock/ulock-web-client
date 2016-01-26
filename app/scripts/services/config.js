@@ -2,5 +2,5 @@
 
 angular.module('services.config', [])
   .constant('configuration', {
-    ulockApi: 'http://localhost:8080'
+    ulockApi: 'https://ulock-staging.herokuapp.com'
   });
