@@ -1,7 +1,16 @@
 sudo: false
 language: node_js
 node_js:
-  - 'stable'
+- stable
 before_script:
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
+- npm install -g bower grunt-cli
+- bower install
+deploy:
+  provider: s3
+  access_key_id: AKIAJOHB55EF6VZPMOXQ
+  secret_access_key:
+    secure: bZjsK5jGGOMmn0BPLPq1IhI2hMrBwaMEzrAJGB5+Z3LX2nQRIynd+kh2uF+bpY+iukIaV8T+8LufYK98wQ64m8f8eEkuYCcNW+0W5UIUloo1eA9RPmIdIxiloeMSlEJNl220g0CRVvaUUOtH3aKpYqUUlFr3LnBeWlVMAZ7haZrT/Hy1u/bmtRTPx63BvtWGbmwHY9txzzK9P+QVTvMV8GXJe18j9xDMNC4Ko/qaY4nwFjWcGW4No6BIxYDfIKwfzTuzUWdALVSBxz9JlyQieY+vkSiXu1negc88cbLLM86HtsgM8UsgtVA3qHZqAeW2v50OA4gRRic0AC1ilVRInzXvzqfa2WPCasozYn1yvQuReQSlXR1YRW32Ikov4eiOtgb4PXnlmtISgRgjU6fG98tT83v4xl+k4oOj64LMmA2zpG13HYwRwsr10p9L7by3uFv9yPCwB+TQ99apcdkrkRG+NQqMDYhODSEqjbmh4V1O/owAcHoMPf4968hm8XOvNr47xddhDrU29JqxQxmwpliBYMq9p/dd6dRR8n/ZZtw53NTzDmFI3zCc+nHFgUKOBFN3Z+EP4OAOM6zxjM/vQhqQIcGZe7WTyI4T3Bf//V+2/urMEvIUIlvlE6HzU1dR+nhLmBEwcc11Ow1iQs0aC3vhFJNTKfxqSqtcmRr79jM=
+  bucket: ulock-web-staging
+  local-dir: dist
+  on:
+    repo: uLock/ulock-web-client
