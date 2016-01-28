@@ -6,6 +6,7 @@ before_script:
 - npm install -g bower grunt-cli
 - bower install
 before_deploy:
+- grunt replace:$TRAVIS_BRANCH
 - grunt build
 deploy:
   provider: s3
