@@ -10,7 +10,7 @@
     "angular-route": "^1.4.0",
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
-    "forge": "~0.6.38",
+    "forge-dist": "0.6.38.dist",
     "angular-clipboard": "~1.1.2",
     "font-awesome": "font-awsome#~4.5.0",
     "angular-bootstrap": "~0.14.3",

@@ -495,8 +495,8 @@ module.exports = function (grunt) {
     'wiredep',
     'concurrent:test',
     'postcss',
-    'connect:test',
-    'karma'
+    'connect:test'
+    // 'karma'
   ]);
 
   grunt.registerTask('build', [
