@@ -18,4 +18,5 @@ deploy:
   acl: public_read
   skip_cleanup: true
   on:
+    branch: staging
     repo: uLock/ulock-web-client
