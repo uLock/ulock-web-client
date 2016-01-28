@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-var module = angular.module('ulockWebApp', [
+var ulockWebApp = angular.module('ulockWebApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -21,39 +21,43 @@ var module = angular.module('ulockWebApp', [
     'services.config'
 ]);
 
+var $injector = angular.injector(['services.config']);
+
 
 var auth = {};
 
-angular.element(document).ready(function($http) {
+angular.element(document).ready(function () {
+    $injector.invoke(function(configuration) {
 
-    var keycloakAuth = new Keycloak({
-      url: 'https://accounts.ulock.co/auth',
-      realm: 'ulock',
-      clientId: 'ulock-web'
-    });
-
-    auth.loggedIn = false;
-
-    keycloakAuth.init({
-        onLoad: 'login-required'
-    }).success(function() {
-        auth.loggedIn = true;
-        auth.authz = keycloakAuth;
-        module.factory('Auth', function() {
-            return auth;
+        var keycloakAuth = new Keycloak({
+          url: 'https://accounts.ulock.co/auth',
+          realm: 'ulock',
+          clientId: configuration.keycloakClient
         });
 
-        auth.authz.loadUserProfile().success(function(profile){
-             auth.profile = profile;
-             angular.bootstrap(document, ["ulockWebApp"]);
+        auth.loggedIn = false;
+
+        keycloakAuth.init({
+            onLoad: 'login-required'
+        }).success(function() {
+            auth.loggedIn = true;
+            auth.authz = keycloakAuth;
+            ulockWebApp.factory('Auth', function() {
+                return auth;
             });
 
-    }).error(function() {
-        alert("failed to login");
+            auth.authz.loadUserProfile().success(function(profile){
+                 auth.profile = profile;
+                 angular.bootstrap(document, ["ulockWebApp"]);
+                });
+
+        }).error(function() {
+            alert("failed to login");
+        });
     });
 });
 
-module.config(function($httpProvider, $routeProvider) {
+ulockWebApp.config(function($httpProvider, $routeProvider) {
     $httpProvider.interceptors.push('authInterceptor');
 
     $routeProvider
@@ -70,7 +74,7 @@ module.config(function($httpProvider, $routeProvider) {
         });
 });
 
-module.factory('authInterceptor', function($q, Auth) {
+ulockWebApp.factory('authInterceptor', function($q, Auth) {
   return {
     request: function(config) {
         var deferred = $q.defer();
@@ -109,7 +113,7 @@ module.factory('authInterceptor', function($q, Auth) {
   };
 });
 
-module.controller('GlobalCtrl', function ($scope,Auth) {
+ulockWebApp.controller('GlobalCtrl', function ($scope,Auth) {
   $scope.name = Auth.profile.firstName;
   $scope.logoutUrl = Auth.authz.createLogoutUrl();
   $scope.accountUrl = Auth.authz.createAccountUrl();

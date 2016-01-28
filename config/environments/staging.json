@@ -1,3 +1,4 @@
 {
-  "ulockApi": "https://ulock-staging.herokuapp.com"
+  "ulockApi": "https://ulock-staging.herokuapp.com",
+  "keycloakClient": "ulock-web-staging"
 }

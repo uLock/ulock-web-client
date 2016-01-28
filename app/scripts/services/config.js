@@ -2,5 +2,6 @@
 
 angular.module('services.config', [])
   .constant('configuration', {
-    ulockApi: 'https://ulock-staging.herokuapp.com'
+    ulockApi: 'http://localhost:8080',
+    keycloakClient:'ulock-web-dev'
   });

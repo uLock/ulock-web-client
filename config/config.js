@@ -2,5 +2,6 @@
 
 angular.module('services.config', [])
   .constant('configuration', {
-    ulockApi: '@@ulockApi'
+    ulockApi: '@@ulockApi',
+    keycloakClient:'@@keycloakClient'
   });
