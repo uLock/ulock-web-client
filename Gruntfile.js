@@ -222,7 +222,7 @@ module.exports = function (grunt) {
       }
     },
 
-    // Renames files for browser caching purposes
+    // Renames files f#or browser caching purposes
     filerev: {
       dist: {
         src: [
@@ -390,6 +390,16 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: 'bower_components/bootstrap/dist',
+          src: 'fonts/*',
+          dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/font-awesome/dist',
+          src: 'fonts/*',
+          dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/patternfly/dist',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
         }]
