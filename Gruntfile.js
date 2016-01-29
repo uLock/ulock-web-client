@@ -400,7 +400,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: 'bower_components/patternfly/',
-          src: 'components/*',
+          src: 'components/font-awesome/fonts/*',
           dest: '<%= yeoman.dist %>'
         }]
       },

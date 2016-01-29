@@ -17,6 +17,7 @@ deploy:
   local-dir: dist
   acl: public_read
   skip_cleanup: true
+  detect_encoding: true
   on:
     branch: staging
     repo: uLock/ulock-web-client
