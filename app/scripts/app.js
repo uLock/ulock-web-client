@@ -21,13 +21,10 @@ var ulockWebApp = angular.module('ulockWebApp', [
     'services.config'
 ]);
 
-var $injector = angular.injector(['services.config']);
-
-
 var auth = {};
 
 angular.element(document).ready(function () {
-    $injector.invoke(function(configuration) {
+    angular.injector(['services.config']).invoke(function(configuration) {
 
         var keycloakAuth = new Keycloak({
           url: 'https://accounts.ulock.co/auth',
