@@ -24,7 +24,7 @@ var ulockWebApp = angular.module('ulockWebApp', [
 var auth = {};
 
 angular.element(document).ready(function () {
-    angular.injector(['services.config']).invoke(function(configuration) {
+    angular.injector(['services.config']).invoke(['configuration',function(configuration) {
 
         var keycloakAuth = new Keycloak({
           url: 'https://accounts.ulock.co/auth',
@@ -51,7 +51,7 @@ angular.element(document).ready(function () {
         }).error(function() {
             alert("failed to login");
         });
-    });
+    }]);
 });
 
 ulockWebApp.config(function($httpProvider, $routeProvider) {
