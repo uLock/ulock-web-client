@@ -1,3 +1,4 @@
 {
-  "roo": "bar"
+  "ulockApi": "https://api.ulock.co",
+  "keycloakClient": "ulock-web"
 }
