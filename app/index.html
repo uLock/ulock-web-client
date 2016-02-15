@@ -9,6 +9,17 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" href="bower_components/c3/c3.css" />
+    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="bower_components/datatables-colreorder/css/dataTables.colReorder.css" />
+    <link rel="stylesheet" href="bower_components/datatables-colvis/css/dataTables.colVis.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/google-code-prettify/bin/prettify.min.css" />
     <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly.css" />
     <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly-additions.css" />
     <link rel="stylesheet" href="bower_components/angular-patternfly/dist/styles/angular-patternfly.css" />
@@ -53,7 +64,10 @@
         </ul>
         <ul class="nav navbar-nav navbar-primary">
           <li class="active">
-            <a href="basic.html" class="active">Passwords</a>
+            <a href="#/passwords" class="active">Passwords</a>
+          </li>
+          <li>
+            <a href="#/generator" class="active">Generator</a>
           </li>
         </ul>
       </div>
@@ -89,9 +103,20 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/forge-dist/js/forge.bundle.js"></script>
     <script src="bower_components/angular-clipboard/angular-clipboard.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/c3/c3.js"></script>
+    <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="bower_components/datatables-colreorder/js/dataTables.colReorder.js"></script>
+    <script src="bower_components/datatables-colvis/js/dataTables.colVis.js"></script>
+    <script src="bower_components/google-code-prettify/bin/prettify.min.js"></script>
+    <script src="bower_components/matchHeight/jquery.matchHeight-min.js"></script>
     <script src="bower_components/patternfly/dist/js/patternfly.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-patternfly/dist/angular-patternfly.js"></script>
     <script src="bower_components/keycloak/dist/keycloak.js"></script>
     <!-- endbower -->
@@ -103,6 +128,9 @@
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/services/locker.js"></script>
+    <script src="scripts/controllers/password.js"></script>
+    <script src="scripts/controllers/generator.js"></script>
+    <script src="scripts/services/passwords.js"></script>
     <!-- endbuild -->
 </body>
 </html>

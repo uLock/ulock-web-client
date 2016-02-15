@@ -58,17 +58,39 @@ ulockWebApp.config(function($httpProvider, $routeProvider) {
     $httpProvider.interceptors.push('authInterceptor');
 
     $routeProvider
-        .when('/', {
+        .when('/decrypt', {
             templateUrl: 'views/login.html',
             controller: 'LoginCtrl'
         })
-        .when('/site', {
+        .when('/passwords', {
             templateUrl: 'views/main.html',
             controller: 'MainCtrl'
         })
+        .when('/passwords/:id', {
+          templateUrl: 'views/password.html',
+          controller: 'PasswordCtrl',
+          controllerAs: 'password'
+        })
+        .when('/generator', {
+          templateUrl: 'views/generator.html',
+          controller: 'GeneratorCtrl',
+          controllerAs: 'generator'
+        })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/passwords'
         });
+});
+
+ulockWebApp.run(function ($rootScope, $location,locker) { //Insert in the function definition the dependencies you need.
+    //Do your $on in here, like this:
+    $rootScope.$on("$locationChangeStart",function(event, next, current){
+        if(next.indexOf('/decrypt') == -1 && !locker.isOpen()) {
+          event.preventDefault();
+          $rootScope.$evalAsync(function() {
+            $location.path('/decrypt');
+          });
+        }
+    });
 });
 
 ulockWebApp.factory('authInterceptor', function($q, Auth) {

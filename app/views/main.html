@@ -1,86 +1,23 @@
 <div class="row">
   <div class="col-md-12">
-    <div pf-data-toolbar config="toolbarConfig"></div>
+    <a href="#/passwords/new" class="btn btn-primary btn-lg">Add password</a>
   </div>
   <hr class="col-md-12">
-  <div class="col-md-12">
-    <label class="events-label">Valid Passwords: </label>
-  </div>
-  <div class="col-md-12 list-view-container" ng-if="viewType == 'listView'">
-    <div pf-data-list config="listConfig" items="items">
-      <div class="row">
-        <div class="col-md-3">
-          <span>{{item.data.name}} </span>
+  <div class="col-md-12 list-view-container">
+    <div pf-list-view class="example-list-view" id="exampleListView" config="config" items="items" action-buttons="actionButtons" enable-button-for-item-fn="enableButtonForItemFn" menu-actions="menuActions" update-menu-action-for-item-fn="updateMenuActionForItemFn">
+      <div class="list-view-pf-description">
+        <div class="list-group-item-heading">
+          {{item.data.name}}
         </div>
-        <div class="col-md-3">
-          <span>{{item.data.username}}  <button class="btn btn-default btn-xs" clipboard text="item.data.username"><i class="fa fa-clipboard"></i></button></span>
-        </div>
-        <div class="col-md-1">
-          <span>******  <button class="btn btn-default btn-xs" clipboard text="site.data.password"><i class="fa fa-clipboard"></i></button></span>
-        </div>
-        <div class="col-md-5">
-          <span>{{item.data.email}}</span>
+        <div class="list-group-item-text">
+          <span>{{item.data.username}} <button class="btn btn-default" clipboard text="item.data.username"><i class="fa fa-clipboard"></i></button></span>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="col-md-12 tiles-view-container" ng-if="viewType == 'tilesView'">
-    <div pf-data-tiles config="vm.listConfig" items="items">
-      <div class="col-md-12">
-        <span>{{item.name}}</span>
-      </div>
-      <div class="col-md-12">
-        <span>Age: {{item.age}}</span>
-      </div>
-      <div class="col-md-12">
-        <span>{{item.address}}</span>
-      </div>
-      <div class="col-md-12">
-        <span>{{item.birthMonth}}</span>
+      <div class="list-view-pf-additional-info">
+        <div class="list-view-pf-additional-info-item">
+           <span>****** <button class="btn btn-default" clipboard text="item.data.password"><i class="fa fa-clipboard"></i></button></span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-<script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title">New password</h3>
-        </div>
-        <div class="modal-body">
-            <form ng-submit="ok()">
-              <div class="form-group">
-                <label>Title</label>
-                <input type="text" class="form-control" ng-model="site.data.name">
-              </div>
-              <div class="form-group">
-                <label>Website URL</label>
-                <input type="text" class="form-control" ng-model="site.data.url">
-              </div>
-              <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" ng-model="site.data.username">
-              </div>
-              <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" ng-model="site.data.email">
-              </div>
-              <div class="form-group">
-                <label>Note</label>
-                <textarea  class="form-control" ng-model="site.data.note"></textarea>
-              </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" ng-model="site.data.password">
-              </div>
-              <div class="form-group">
-                <label>Confirm password</label>
-                <input type="password" class="form-control" ng-model="confirmPassword">
-              </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-</script>

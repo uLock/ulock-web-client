@@ -13,7 +13,7 @@ angular.module('ulockWebApp')
     $scope.open = function (masterpassword) {
       locker.open(masterpassword, function (success) {
           if(success) {
-            $location.path('/site');
+            $location.path('/passwords');
           }
           else {
             alert('invalid!');

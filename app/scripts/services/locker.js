@@ -98,7 +98,7 @@ angular.module('ulockWebApp')
 
         var newSettings = encryptEntity(settings);
 
-        $http.post(configuration.ulockApi+'/settings',newSettings).then(function(response) {
+        $http.post(configuration.ulockApi+'/user',newSettings).then(function(response) {
             var encryptSettings = response.data;
             settings = decryptEntity(encryptSettings);
             callback(true);
@@ -113,7 +113,7 @@ angular.module('ulockWebApp')
      this.open = function (masterKey, callback) {
        masterPassword = masterKey;
 
-       $http.get(configuration.ulockApi+'/settings').then(function success(response) {
+       $http.get(configuration.ulockApi+'/user').then(function success(response) {
          var encryptSettings = response.data;
          if(encryptSettings.id) {
            //try to decrypt data to test the masterPassword
