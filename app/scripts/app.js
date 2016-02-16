@@ -24,6 +24,9 @@ var ulockWebApp = angular.module('ulockWebApp', [
 var auth = {};
 
 angular.element(document).ready(function () {
+
+    console.log('Invoke keycloak');
+
     angular.injector(['services.config']).invoke(['configuration',function(configuration) {
 
         var keycloakAuth = new Keycloak({
@@ -81,7 +84,9 @@ ulockWebApp.config(function($httpProvider, $routeProvider) {
         });
 });
 
-ulockWebApp.run(function ($rootScope, $location,locker) { //Insert in the function definition the dependencies you need.
+ulockWebApp.run(['$rootScope', '$location','locker',function ($rootScope, $location,locker) { //Insert in the function definition the dependencies you need.
+
+    console.log('Register location change hook')
     //Do your $on in here, like this:
     $rootScope.$on("$locationChangeStart",function(event, next, current){
         if(next.indexOf('/decrypt') == -1 && !locker.isOpen()) {
@@ -91,7 +96,7 @@ ulockWebApp.run(function ($rootScope, $location,locker) { //Insert in the functi
           });
         }
     });
-});
+}]);
 
 ulockWebApp.factory('authInterceptor', function($q, Auth) {
   return {

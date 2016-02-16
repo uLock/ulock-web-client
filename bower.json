@@ -15,7 +15,6 @@
     "lodash": "~3.10.1",
     "patternfly": "~3.0.0",
     "angular-patternfly": "~3.0.0",
-    "keycloak": "~1.7.0",
     "bootstrap-combobox": "~1.1.6"
   },
   "devDependencies": {
