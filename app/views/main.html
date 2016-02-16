@@ -16,7 +16,12 @@
       </div>
       <div class="list-view-pf-additional-info">
         <div class="list-view-pf-additional-info-item">
-           <span>****** <button class="btn btn-default" clipboard text="item.data.password"><i class="fa fa-clipboard"></i></button></span>
+           <span ng-hide="item.show">*****</span>
+           <span ng-show="item.show">{{item.data.password}}</span>
+           <div class="btn-group" role="group" >
+             <button class="btn btn-default" clipboard text="item.data.password"><i class="fa fa-clipboard"></i></button>
+             <button class="btn btn-default" ng-click="item.show=!item.show"><i class="fa fa-eye"></i></button>
+           </div>
         </div>
       </div>
     </div>
