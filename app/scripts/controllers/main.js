@@ -27,17 +27,15 @@ angular.module('ulockWebApp')
     };
 
     var checkDisabledItem = function(item) {
-      return $scope.showDisabled && (item.name === "John Smith");
+      return $scope.showDisabled;
     };
 
     $scope.enableButtonForItemFn = function(action, item) {
-      return (action.name !== 'Action 2') || (item.name !== "Frank Livingston");
+      return true;
     };
 
     $scope.updateMenuActionForItemFn = function(action, item) {
-      if (action.name === 'Another Action') {
-        action.isVisible = (item.name !== "John Smith");
-      }
+      return true;
     };
 
     $scope.selectType = 'checkbox';
@@ -97,4 +95,11 @@ angular.module('ulockWebApp')
       title: 'Share the password with another user',
       actionFn: performAction
     }];
+
+    $scope.exportPasswords = function () {
+      return _.map($scope.items,function (item) {
+        return item.data;
+      });
+    };
+
   });

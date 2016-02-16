@@ -48,6 +48,7 @@ module.exports = function(config) {
       'bower_components/patternfly/dist/js/patternfly.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-patternfly/dist/angular-patternfly.js',
+      'bower_components/ng-csv/build/ng-csv.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

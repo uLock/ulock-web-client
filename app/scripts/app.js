@@ -16,7 +16,8 @@ var ulockWebApp = angular.module('ulockWebApp', [
     'ngSanitize',
     'ngTouch',
     'angular-clipboard',
-    'ui.bootstrap',
+    'ngSanitize',
+    'ngCsv',
     'patternfly',
     'services.config'
 ]);
