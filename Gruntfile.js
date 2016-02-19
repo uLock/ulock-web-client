@@ -299,19 +299,31 @@ module.exports = function(grunt) {
     // concat: {
     //   dist: {}
     // },
-    concat: {
-      options: {
-        sourceMap: true
-      }
-    },
+
+    // concat: {
+    //   options: {
+    //     sourceMap: true
+    //   }
+    // },
+    //
+    // uglify: {
+    //   options: {
+    //     mangle: false,
+    //     compress: false,
+    //     beautify: true,
+    //     sourceMap: true,
+    //     sourceMapIn: function(uglifySource) {
+    //       return uglifySource + '.map';
+    //     },
+    //     sourceMapIncludeSources: true
+    //   }
+    // },
 
     uglify: {
       options: {
-        sourceMap: true,
-        sourceMapIn: function(uglifySource) {
-          return uglifySource + '.map';
-        },
-        sourceMapIncludeSources: true
+        mangle: false,
+        compress: false,
+        beautify: true
       }
     },
 
@@ -397,7 +409,7 @@ module.exports = function(grunt) {
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>',
           src: [
-            '*.{ico,png,txt}',
+            '*.{ico,png,txt,json}',
             '*.html',
             'images/{,*/}*.{webp}',
             'styles/fonts/{,*/}*.*'
@@ -539,7 +551,6 @@ module.exports = function(grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
     'cssmin',
     'uglify',
     'filerev',

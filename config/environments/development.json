@@ -1,4 +1,4 @@
 {
   "ulockApi": "http://localhost:8080",
-  "keycloakClient": "ulock-web-dev" 
+  "keycloakClient": "keycloak-dev.json" 
 }

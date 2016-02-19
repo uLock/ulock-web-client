@@ -1,138 +1,141 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" />
-    <link rel="stylesheet" href="bower_components/c3/c3.css" />
-    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="bower_components/datatables-colreorder/css/dataTables.colReorder.css" />
-    <link rel="stylesheet" href="bower_components/datatables-colvis/css/dataTables.colVis.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/google-code-prettify/bin/prettify.min.css" />
-    <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly.css" />
-    <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly-additions.css" />
-    <link rel="stylesheet" href="bower_components/angular-patternfly/dist/styles/angular-patternfly.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body>
-    <nav class="navbar navbar-default navbar-pf" role="navigation" ng-controller="GlobalCtrl">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">
-          <img src="../dist/img/brand.svg" alt="uLock.co" />
-        </a>
-      </div>
-      <div class="collapse navbar-collapse navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-utility">
-          <li>
-            <a href="#">Status</a>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="pficon pficon-user"></span>
-              {{name}} <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a ng-href="{{accountUrl}}">Account</a>
-              </li>
-              <li>
-                <a ng-href="{{logoutUrl}}">Logout</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-primary">
-          <li class="active">
-            <a href="#/passwords" class="active">Passwords</a>
-          </li>
-          <li>
-            <a href="#/generator" class="active">Generator</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
 
-    <div class="container-fluid">
-        <div ng-view=""></div>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" />
+  <link rel="stylesheet" href="bower_components/c3/c3.css" />
+  <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
+  <link rel="stylesheet" href="bower_components/datatables-colreorder/css/dataTables.colReorder.css" />
+  <link rel="stylesheet" href="bower_components/datatables-colvis/css/dataTables.colVis.css" />
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="bower_components/google-code-prettify/bin/prettify.min.css" />
+  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly.css" />
+  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly-additions.css" />
+  <link rel="stylesheet" href="bower_components/angular-patternfly/dist/styles/angular-patternfly.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-pf" role="navigation" ng-controller="GlobalCtrl">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <img src="../dist/img/brand.svg" alt="uLock.co" />
+      </a>
     </div>
+    <div class="collapse navbar-collapse navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-utility">
+        <li>
+          <a href="#">Status</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="pficon pficon-user"></span> {{name}} <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a ng-href="{{accountUrl}}">Account</a>
+            </li>
+            <li>
+              <a ng-href="{{logoutUrl}}">Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-primary">
+        <li class="active">
+          <a href="#/passwords" class="active">Passwords</a>
+        </li>
+        <li>
+          <a href="#/generator" class="active">Generator</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div ng-view=""></div>
+  </div>
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+    ! function(A, n, g, u, l, a, r) {
+      A.GoogleAnalyticsObject = l, A[l] = A[l] || function() {
+          (A[l].q = A[l].q || []).push(arguments)
+        }, A[l].l = +new Date, a = n.createElement(g),
+        r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+    }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+  </script>
 
-    <script src="https://accounts.ulock.co/auth/js/keycloak.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-    <!-- build:js(.)  scripts/vendor.js -->
+  <script src="https://accounts.ulock.co/auth/js/keycloak.min.js"></script>
 
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/forge-dist/js/forge.bundle.js"></script>
-    <script src="bower_components/angular-clipboard/angular-clipboard.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
-    <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
-    <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/c3/c3.js"></script>
-    <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
-    <script src="bower_components/datatables-colreorder/js/dataTables.colReorder.js"></script>
-    <script src="bower_components/datatables-colvis/js/dataTables.colVis.js"></script>
-    <script src="bower_components/google-code-prettify/bin/prettify.min.js"></script>
-    <script src="bower_components/matchHeight/jquery.matchHeight-min.js"></script>
-    <script src="bower_components/patternfly/dist/js/patternfly.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-patternfly/dist/angular-patternfly.js"></script>
-    <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- build:js(.)  scripts/vendor.js -->
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/patternfly/dist/js/patternfly.js"></script>
+  <script src="bower_components/angular-patternfly/dist/angular-patternfly.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/ng-csv/build/ng-csv.js"></script>
+  <script src="bower_components/forge-dist/js/forge.bundle.js"></script>
+  <script src="bower_components/angular-clipboard/angular-clipboard.js"></script>
+  <script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+  <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+  <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+  <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+  <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+  <script src="bower_components/datatables-colreorder/js/dataTables.colReorder.js"></script>
+  <script src="bower_components/datatables-colvis/js/dataTables.colVis.js"></script>
+  <script src="bower_components/google-code-prettify/bin/prettify.min.js"></script>
+  <script src="bower_components/matchHeight/jquery.matchHeight-min.js"></script>
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/services/config.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/services/locker.js"></script>
-    <script src="scripts/controllers/password.js"></script>
-    <script src="scripts/controllers/generator.js"></script>
-    <script src="scripts/services/passwords.js"></script>
-    <!-- endbuild -->
+
+  <!-- endbuild -->
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/services/config.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/login.js"></script>
+  <script src="scripts/services/locker.js"></script>
+  <script src="scripts/controllers/password.js"></script>
+  <script src="scripts/controllers/generator.js"></script>
+  <script src="scripts/services/passwords.js"></script>
+  <!-- endbuild -->
 </body>
+
 </html>

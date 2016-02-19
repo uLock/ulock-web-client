@@ -1,0 +1,10 @@
+{
+  "realm": "ulock",
+  "realm-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjnk/6TG4JKf5bMFCXrHseoQ/4R3rgNMWnhaWsQ464KetOPRvs5QEXb8TUCziBsvPpzfEu2l0BFPcKfp9GIAwQUwcWvJMh5AZ3JzTWaje10zfWeCVutVdwlr7VRIFBBosMtn+gIigsGzcZSx60IS4c+h+NNn3jRmJQz83/YmpchMwEdA8M49CMw2jXbhDNFtDotID1Ge2pXkU9stcEwPzlLIr8loD33MRKcraN2y7ERLMPJPzGBxWwYvmJOKZb2p/sa5KJjHE2nRarZCli9CcksAaOgZXKhYNtzq01c+zINa+iAgqCIDzIxlxaKkxUvd1L/41TlnbLLQdgQHz7m5CowIDAQAB",
+  "auth-server-url": "https://accounts.ulock.co/auth",
+  "ssl-required": "external",
+  "resource": "ulock-web-dev",
+  "credentials": {
+    "secret": "e1da7196-891a-43e4-97cc-9dc85556cc94"
+  }
+}

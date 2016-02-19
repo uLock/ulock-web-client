@@ -1,4 +1,4 @@
 {
   "ulockApi": "https://api.ulock.co",
-  "keycloakClient": "ulock-web"
+  "keycloakClient": "keycloak.json"
 }
