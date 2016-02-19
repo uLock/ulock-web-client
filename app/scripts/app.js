@@ -111,9 +111,7 @@ ulockWebApp.config(function($httpProvider) {
 });
 
 ulockWebApp.controller('GlobalCtrl', function($scope, Auth) {
-$scope.name = Auth.profile.firstName;
-$scope.logoutUrl = Auth.authz.createLogoutUrl();
-$scope.accountUrl = Auth.authz.createAccountUrl();
-});
-
+  $scope.name = Auth.profile.firstName;
+  $scope.logoutUrl = Auth.authz.createLogoutUrl();
+  $scope.accountUrl = Auth.authz.createAccountUrl();
 });
