@@ -1,29 +1,27 @@
 'use strict';
 
 var auth = {};
-var logout = function(){
-    console.log('*** LOGOUT');
-    auth.loggedIn = false;
-    auth.authz = null;
-    window.location = auth.logoutUrl;
-};
 
-angular.element(document).ready(function ($http) {
-    console.log("*** here");
-    var keycloakAuth = new Keycloak('@@keycloakClient');
-    auth.loggedIn = false;
+angular.element(document).ready(function($http) {
+  var keycloakAuth = new Keycloak('@@keycloakClient');
+  auth.loggedIn = false;
 
-    keycloakAuth.init({ onLoad: 'login-required' }).success(function () {
-        console.log('here login');
-        auth.loggedIn = true;
-        auth.authz = keycloakAuth;
-        ulockWebApp.factory('Auth', function() {
-            return auth;
-        });
-        angular.bootstrap(document, ["ulockWebApp"]);
-    }).error(function () {
-            alert("failed to login");
-        });
+  keycloakAuth.init({
+    onLoad: 'login-required'
+  }).success(function() {
+    console.log('here login');
+    auth.loggedIn = true;
+    auth.authz = keycloakAuth;
+    ulockWebApp.factory('Auth', function() {
+      return auth;
+    });
+    auth.authz.loadUserProfile().success(function(profile) {
+      auth.profile = profile;
+      angular.bootstrap(document, ["ulockWebApp"]);
+    });
+  }).error(function() {
+    alert("failed to login");
+  });
 });
 
 
