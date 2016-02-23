@@ -81,14 +81,18 @@ angular.module('ulockWebApp')
       $location.path('/passwords/' + item.id);
     };
 
+    var showAction = function(action, item) {
+      item.show = !item.show;
+    };
+
     $scope.actionButtons = [{
+      name: 'Show',
+      title: 'Show the password',
+      actionFn: showAction
+    },{
       name: 'Edit',
       title: 'Edit the password',
       actionFn: editAction
-    }, {
-      name: 'Delete',
-      title: 'Delete the password',
-      actionFn: performAction
     }];
     $scope.menuActions = [{
       name: 'Share',

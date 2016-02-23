@@ -8,20 +8,19 @@
     <div pf-list-view class="example-list-view" id="exampleListView" config="config" items="items" action-buttons="actionButtons" enable-button-for-item-fn="enableButtonForItemFn" menu-actions="menuActions" update-menu-action-for-item-fn="updateMenuActionForItemFn">
       <div class="list-view-pf-description">
         <div class="list-group-item-heading">
-          {{item.data.name}}
+          <img ng-src="item.data.logo"/>
         </div>
         <div class="list-group-item-text">
-          <span>{{item.data.username}} <button class="btn btn-default" clipboard text="item.data.username"><i class="fa fa-clipboard"></i></button></span>
+          <span>{{item.data.name}}</span>
         </div>
       </div>
       <div class="list-view-pf-additional-info">
         <div class="list-view-pf-additional-info-item">
+             <span>{{item.data.username}}</span>
+        </div>
+        <div class="list-view-pf-additional-info-item">
            <span ng-hide="item.show">*****</span>
            <span ng-show="item.show">{{item.data.password}}</span>
-           <div class="btn-group" role="group" >
-             <button class="btn btn-default" clipboard text="item.data.password"><i class="fa fa-clipboard"></i></button>
-             <button class="btn btn-default" ng-click="item.show=!item.show"><i class="fa fa-eye"></i></button>
-           </div>
         </div>
       </div>
     </div>
