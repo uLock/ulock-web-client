@@ -8,16 +8,21 @@
  * Controller of the ulockWebApp
  */
 angular.module('ulockWebApp')
-  .controller('LoginCtrl', function ($scope,locker,$location) {
+  .controller('LoginCtrl', function($scope, locker, $location) {
 
-    $scope.open = function (masterpassword) {
-      locker.open(masterpassword, function (success) {
-          if(success) {
-            $location.path('/passwords');
-          }
-          else {
-            alert('invalid!');
-          }
+    locker.automaticDecrypt(function(success) {
+      if (success) {
+        $location.path('/passwords');
+      }
+    });
+
+    $scope.open = function(masterpassword) {
+      locker.open(masterpassword, true, function(success) {
+        if (success) {
+          $location.path('/passwords');
+        } else {
+          alert('invalid!');
+        }
       });
 
     };

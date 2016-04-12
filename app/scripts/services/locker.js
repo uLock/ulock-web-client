@@ -97,7 +97,7 @@ angular.module('ulockWebApp')
 
     this.decryptEntity = decryptEntity;
 
-    var createNewAccount = function(masterKey,callback) {
+    var createNewAccount = function(masterKey, callback) {
 
       // generate an RSA key pair synchronously
       var keypair = rsa.generateKeyPair({
@@ -117,22 +117,56 @@ angular.module('ulockWebApp')
         }
       };
 
-      var newSettings = encryptEntity(settings,masterKey);
+      var newSettings = encryptEntity(settings, masterKey);
 
       $http.post(configuration.ulockApi + '/user', newSettings).then(function(response) {
         var encryptSettings = response.data;
-        settings = decryptEntity(encryptSettings,masterKey);
+        settings = decryptEntity(encryptSettings, masterKey);
         sessionStorage.setItem('secret', settings.data.secret);
         callback(true);
       });
 
     };
 
-    this.isOpen = function() {
+
+    this.automaticDecrypt = function(next) {
+      if (localStorage.getItem('deviceId') && localStorage.getItem('encryptedKey')) {
+        $http.get(configuration.ulockApi + '/decrypt/' + localStorage.getItem('deviceId')).then(function(response) {
+          if (response.data.key) {
+            var decryptKey = response.data;
+            var masterKey = decrypt(JSON.parse(localStorage.getItem('encryptedKey')), decryptKey.key);
+            openLocker(masterKey,false, next);
+          } else {
+            next(false);
+          }
+
+        });
+      } else {
+        next(false);
+      }
+    };
+
+    this.isOpen = function(next) {
       return !!sessionStorage.getItem("secret");
     };
 
-    this.open = function(masterKey, callback) {
+    var createRemenberMe = function(masterKey) {
+
+      var deviceId = localStorage.getItem('deviceId');
+
+      if (!deviceId) {
+        deviceId = forge.util.bytesToHex(forge.random.getBytesSync(32));
+        localStorage.setItem('deviceId', deviceId);
+      }
+
+      $http.post(configuration.ulockApi + '/decrypt/' + deviceId).then(function(response) {
+        var decryptKey = response.data;
+        var encryptedInfo = encrypt(masterKey, decryptKey.key);
+        localStorage.setItem('encryptedKey', JSON.stringify(encryptedInfo))
+      });
+    };
+
+    var openLocker = function(masterKey, saveRememberMe, callback) {
 
       $http.get(configuration.ulockApi + '/user').then(function success(response) {
         var encryptSettings = response.data;
@@ -142,6 +176,9 @@ angular.module('ulockWebApp')
             var decrypted = decryptEntity(encryptSettings, masterKey);
             var settings = decrypted;
             sessionStorage.setItem('secret', settings.data.secret);
+            if (saveRememberMe) {
+              createRemenberMe(masterKey);
+            }
             callback(true);
           } catch (ex) {
             alert('fail to decrypt');
@@ -150,7 +187,12 @@ angular.module('ulockWebApp')
         } else {
           //new account
           //TODO add confirm masterKey
-          createNewAccount(masterKey,callback);
+          createNewAccount(masterKey, function(result) {
+            if (result) {
+              createRemenberMe(masterKey);
+            }
+            callback(result);
+          });
 
         }
       }, function error(response) {
@@ -158,5 +200,7 @@ angular.module('ulockWebApp')
       });
 
     };
+
+    this.open = openLocker;
 
   });
