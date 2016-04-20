@@ -10,10 +10,14 @@
 angular.module('ulockWebApp')
   .controller('LoginCtrl', function($scope, locker, $location) {
 
+    
+
+    $scope.loading = true;
     locker.automaticDecrypt(function(success) {
       if (success) {
         $location.path('/passwords');
       }
+      $scope.loading = false;
     });
 
     $scope.open = function(masterpassword) {

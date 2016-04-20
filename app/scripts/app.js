@@ -86,16 +86,9 @@ ulockWebApp.factory('authInterceptor', function($q, Auth) {
         logout();
       } else if (response.status == 403) {
         alert("Forbidden");
-      } else if (response.status == 404) {
-        alert("Not found");
-      } else if (response.status) {
-        if (response.data && response.data.errorMessage) {
-          alert(response.data.errorMessage);
-        } else {
-          alert("An unexpected server error has occurred");
-        }
-      }
-      return $q.reject(response);
+      } 
+      // return $q.reject(response);
+      return response;
     }
 
   };

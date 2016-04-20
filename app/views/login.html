@@ -1,6 +1,16 @@
-<form class="form-signin" ng-submit="open(password)">
+<form class="form-signin" ng-submit="open(password)" ng-hide="loading">
   <h2 class="form-signin-heading">Please enter the master password</h2>
   <label for="inputPassword" class="sr-only">Master key</label>
   <input type="password" id="inputPassword" class="form-control" placeholder="Master passphrase" ng-model="password" required>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Decrypt</button>
 </form>
+
+<div  class="form-signin" ng-show="loading" >
+  <div class="sk-folding-cube">
+    <div class="sk-cube1 sk-cube"></div>
+    <div class="sk-cube2 sk-cube"></div>
+    <div class="sk-cube4 sk-cube"></div>
+    <div class="sk-cube3 sk-cube"></div>
+  </div>
+  <h3 style="text-align:center">{{loadingMessage}}</h3>
+</div>
