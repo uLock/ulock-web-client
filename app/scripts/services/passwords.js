@@ -40,7 +40,9 @@ angular.module('ulockWebApp')
         $http.get(configuration.ulockApi+'/passwords').then(function (res) {
           var encryptedPasswords = res.data;
           if(encryptedPasswords && encryptedPasswords.length > 0) {
-              var passwords = _.map(encryptedPasswords,locker.decryptEntity);
+              var passwords = _.map(encryptedPasswords,function (pass) {
+                return locker.decryptEntity(pass);
+              });
               callback(passwords);
           }
           else {

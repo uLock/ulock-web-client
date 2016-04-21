@@ -24,8 +24,8 @@ angular.module('ulockWebApp')
     }
 
     $scope.save = function(pass) {
-      if(pass.website) {
-        pass.logo = '//logo.clearbit.com/'+pass.website+'?size=50';
+      if(pass.data.website) {
+        pass.data.logo = '//logo.clearbit.com/'+pass.data.website+'?size=50';
       }
       passwords.save(pass, function() {
         $location.path('/passwords');
