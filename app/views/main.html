@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <!-- <div class="col-md-12">
     <a href="#/passwords/new" class="btn btn-primary btn-lg">Add password</a>
     <button type="button" class="btn btn-warning btn-lg" ng-csv="exportPasswords()" filename="passwords.csv">Export</button>
   </div>
@@ -22,6 +22,52 @@
            <span ng-hide="item.show">*****</span>
            <span ng-show="item.show">{{item.data.password}}</span>
         </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="col-md-12">
+    <div pf-toolbar id="exampleToolbar" config="toolbarConfig"></div>
+  </div>
+  <hr class="col-md-12">
+  <div class="col-md-12">
+    <label class="events-label">Valid Items: </label>
+  </div>
+  <div class="col-md-12 list-view-container" ng-if="viewType == 'listView'">
+    <div pf-list-view config="listConfig" items="items">
+      <div class="list-view-pf-description">
+        <div class="list-group-item-heading">
+          <img ng-src="{{item.data.logo}}"/>
+        </div>
+        <div class="list-group-item-text">
+          {{item.data.name}}
+        </div>
+      </div>
+      <div class="list-view-pf-additional-info">
+        <div class="list-view-pf-additional-info-item">
+          {{item.data.username}}
+        </div>
+        <div class="list-view-pf-additional-info-item">
+          {{item.data.email}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 card-view-container" ng-if="viewType == 'cardView'">
+    <div pf-card-view config="vm.listConfig" items="items">
+      <div style="text-align: right" class="col-md-12">
+          <a href="#/passwords/{{item.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+      </div>
+      <div class="col-md-12">
+          <img ng-src="{{item.data.logo}}"/>
+      </div>
+      <div class="col-md-12">
+        <span>{{item.data.name}}</span>
+      </div>
+      <div class="col-md-12">
+        <span>{{item.data.username}}</span>
+      </div>
+      <div class="col-md-12">
+        <span>{{item.data.email}}</span>
       </div>
     </div>
   </div>

@@ -8,102 +8,176 @@
  * Controller of the ulockWebApp
  */
 angular.module('ulockWebApp')
-  .controller('MainCtrl', function($scope, $location, passwords) {
-    $scope.eventText = '';
-    var handleSelect = function(item, e) {
-      $scope.eventText = item.name + ' selected\r\n' + $scope.eventText;
-    };
-    var handleSelectionChange = function(selectedItems, e) {
-      $scope.eventText = selectedItems.length + ' items selected\r\n' + $scope.eventText;
-    };
-    var handleClick = function(item, e) {
-      $scope.eventText = item.name + ' clicked\r\n' + $scope.eventText;
-    };
-    var handleDblClick = function(item, e) {
-      $scope.eventText = item.name + ' double clicked\r\n' + $scope.eventText;
-    };
-    var handleCheckBoxChange = function(item, selected, e) {
-      $scope.eventText = item.name + ' checked: ' + item.selected + '\r\n' + $scope.eventText;
+  .controller('MainCtrl', function($scope, pfViewUtils,$location, passwords) {
+    $scope.filtersText = '';
+    $scope.allItems = [];
+    $scope.items = [];
+
+    passwords.list(function(values) {
+      if(values) {
+        $scope.allItems = values;
+        $scope.items = $scope.allItems;
+      }
+    });
+
+    var matchesFilter = function(item, filter) {
+      var match = true;
+
+      if (filter.id === 'name') {
+        match = item.data.name.match(filter.value) !== null;
+      } else if (filter.id === 'username') {
+        match = item.data.username === parseInt(filter.value);
+      } else if (filter.id === 'email') {
+        match = item.data.email.match(filter.value) !== null;
+      }
+      return match;
     };
 
-    var checkDisabledItem = function(item) {
-      return $scope.showDisabled;
+    var matchesFilters = function(item, filters) {
+      var matches = true;
+
+      filters.forEach(function(filter) {
+        if (!matchesFilter(item, filter)) {
+          matches = false;
+          return false;
+        }
+      });
+      return matches;
     };
 
-    $scope.enableButtonForItemFn = function(action, item) {
-      return true;
-    };
-
-    $scope.updateMenuActionForItemFn = function(action, item) {
-      return true;
-    };
-
-    $scope.selectType = 'checkbox';
-    $scope.updateSelectionType = function() {
-      if ($scope.selectType === 'checkbox') {
-        $scope.config.selectItems = false;
-        $scope.config.showSelectBox = true;
-      } else if ($scope.selectType === 'row') {
-        $scope.config.selectItems = true;
-        $scope.config.showSelectBox = false;
+    var applyFilters = function(filters) {
+      $scope.items = [];
+      if (filters && filters.length > 0) {
+        $scope.allItems.forEach(function(item) {
+          if (matchesFilters(item, filters)) {
+            $scope.items.push(item);
+          }
+        });
       } else {
-        $scope.config.selectItems = false
-        $scope.config.showSelectBox = false;
+        $scope.items = $scope.allItems;
       }
     };
 
-    $scope.showDisabled = false;
-
-    $scope.config = {
-      selectItems: false,
-      multiSelect: false,
-      dblClick: false,
-      selectionMatchProp: 'name',
-      selectedItems: [],
-      checkDisabled: checkDisabledItem,
-      showSelectBox: true,
-      onSelect: handleSelect,
-      onSelectionChange: handleSelectionChange,
-      onCheckBoxChange: handleCheckBoxChange,
-      onClick: handleClick,
-      onDblClick: handleDblClick
+    var filterChange = function(filters) {
+      $scope.filtersText = "";
+      filters.forEach(function(filter) {
+        $scope.filtersText += filter.title + " : " + filter.value + "\n";
+      });
+      applyFilters(filters);
+      $scope.toolbarConfig.filterConfig.resultsCount = $scope.items.length;
     };
 
-    passwords.list(function(values) {
-      $scope.items = values;
-    });
+    $scope.filterConfig = {
+      fields: [{
+        id: 'name',
+        title: 'Name',
+        placeholder: 'Filter by Name...',
+        filterType: 'text'
+      }, {
+        id: 'username',
+        title: 'Username',
+        placeholder: 'Filter by Username...',
+        filterType: 'text'
+      }, {
+        id: 'email',
+        title: 'Email',
+        placeholder: 'Filter by Email...',
+        filterType: 'text'
+      }],
+      resultsCount: $scope.items.length,
+      appliedFilters: [],
+      onFilterChange: filterChange
+    };
 
-    var performAction = function(action, item) {
+    var viewSelected = function(viewId) {
+      $scope.viewType = viewId
+    };
+
+    $scope.viewsConfig = {
+      views: [pfViewUtils.getCardView(),pfViewUtils.getListView()],
+      onViewSelect: viewSelected
+    };
+    $scope.viewsConfig.currentView = $scope.viewsConfig.views[0].id;
+    $scope.viewType = $scope.viewsConfig.currentView;
+
+
+    var compareFn = function(item1, item2) {
+      var compValue = 0;
+      if ($scope.sortConfig.currentField.id === 'name') {
+        compValue = item1.name.localeCompare(item2.name);
+      } else if ($scope.sortConfig.currentField.id === 'username') {
+        compValue = item1.data.username - item2.data.username;
+      } else if ($scope.sortConfig.currentField.id === 'email') {
+        compValue = item1.data.email.localeCompare(item2.data.email);
+      }
+
+      if (!$scope.sortConfig.isAscending) {
+        compValue = compValue * -1;
+      }
+
+      return compValue;
+    };
+
+    var sortChange = function(sortId, isAscending) {
+      $scope.items.sort(compareFn);
+    };
+
+    $scope.sortConfig = {
+      fields: [{
+        id: 'name',
+        title: 'Name',
+        sortType: 'alpha'
+      }, {
+        id: 'username',
+        title: 'Username',
+        sortType: 'alpha'
+      }, {
+        id: 'email',
+        title: 'Email',
+        sortType: 'alpha'
+      }],
+      onSortChange: sortChange
+    };
+
+    var performAction = function(action) {
       alert('Not supported!');
     };
 
-    var editAction = function(action, item) {
-      $location.path('/passwords/' + item.id);
+    var addAction = function(action) {
+      $location.path('/passwords/new');
     };
 
-    var showAction = function(action, item) {
-      item.show = !item.show;
+    var editAction = function(action,elem) {
+      console.log(action);
+      // $location.path('/password/new');
     };
 
-    $scope.actionButtons = [{
-      name: 'Show',
-      title: 'Show the password',
-      actionFn: showAction
-    },{
-      name: 'Edit',
-      title: 'Edit the password',
-      actionFn: editAction
-    }];
-    $scope.menuActions = [{
-      name: 'Share',
-      title: 'Share the password with another user',
-      actionFn: performAction
-    }];
-
-    $scope.exportPasswords = function () {
-      return _.map($scope.items,function (item) {
-        return item.data;
-      });
+    $scope.actionsConfig = {
+      primaryActions: [{
+        name: 'Add',
+        title: 'Add new password',
+        actionFn: addAction
+      }, {
+        name: 'Share',
+        title: 'Share a password',
+        actionFn: performAction
+      }],
+      moreActions: [{
+        name: 'Export',
+        title: 'Export password',
+        actionFn: performAction
+      }]
     };
 
+    $scope.toolbarConfig = {
+      viewsConfig: $scope.viewsConfig,
+      filterConfig: $scope.filterConfig,
+      sortConfig: $scope.sortConfig,
+      actionsConfig: $scope.actionsConfig
+    };
+
+    $scope.listConfig = {
+      selectionMatchProp: 'name',
+      checkDisabled: false
+    };
   });
