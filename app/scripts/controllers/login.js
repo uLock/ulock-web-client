@@ -15,7 +15,9 @@ angular.module('ulockWebApp')
       if (success) {
         $location.path('/passwords');
       }
-      $scope.loading = false;
+      else{
+        $scope.loading = false;        
+      }
     });
 
     $scope.open = function(masterpassword) {
