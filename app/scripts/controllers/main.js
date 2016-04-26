@@ -147,11 +147,6 @@ angular.module('ulockWebApp')
       $location.path('/passwords/new');
     };
 
-    var editAction = function(action,elem) {
-      console.log(action);
-      // $location.path('/password/new');
-    };
-
     $scope.actionsConfig = {
       primaryActions: [{
         name: 'Add',
