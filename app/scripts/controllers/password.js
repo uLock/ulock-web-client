@@ -36,4 +36,13 @@ angular.module('ulockWebApp')
       $location.path('/passwords');
     };
 
+    $scope.getPasswordInputType = function(showPassword) {
+      if(showPassword) {
+        return 'text';
+      }
+      else {
+        return 'password';
+      }
+    };
+
   });
