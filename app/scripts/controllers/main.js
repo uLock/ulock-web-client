@@ -8,7 +8,7 @@
  * Controller of the ulockWebApp
  */
 angular.module('ulockWebApp')
-  .controller('MainCtrl', function($scope, pfViewUtils,$location, passwords) {
+  .controller('MainCtrl', function($scope, pfViewUtils,$location, passwords, Notifications) {
     $scope.filtersText = '';
     $scope.allItems = [];
     $scope.items = [];
@@ -140,7 +140,7 @@ angular.module('ulockWebApp')
     };
 
     var performAction = function(action) {
-      alert('Not supported!');
+      Notifications.info('This action is not supported for the moment');
     };
 
     var addAction = function(action) {
@@ -175,4 +175,13 @@ angular.module('ulockWebApp')
       selectionMatchProp: 'name',
       checkDisabled: false
     };
+
+    $scope.passwordCopied = function() {
+      Notifications.success('Password copied!');
+    };
+
+    $scope.fail = function(err) {
+      Notifications.error(err);
+    };
+
   });

@@ -1,32 +1,6 @@
 <div class="row">
-  <!-- <div class="col-md-12">
-    <a href="#/passwords/new" class="btn btn-primary btn-lg">Add password</a>
-    <button type="button" class="btn btn-warning btn-lg" ng-csv="exportPasswords()" filename="passwords.csv">Export</button>
-  </div>
-  <hr class="col-md-12">
-  <div class="col-md-12 list-view-container">
-    <div pf-list-view class="example-list-view" id="exampleListView" config="config" items="items" action-buttons="actionButtons" enable-button-for-item-fn="enableButtonForItemFn" menu-actions="menuActions" update-menu-action-for-item-fn="updateMenuActionForItemFn">
-      <div class="list-view-pf-description">
-        <div class="list-group-item-heading">
-          <img ng-src="{{item.data.logo}}"/>
-        </div>
-        <div class="list-group-item-text">
-          <span>{{item.data.name}}</span>
-        </div>
-      </div>
-      <div class="list-view-pf-additional-info">
-        <div class="list-view-pf-additional-info-item">
-             <span>{{item.data.username}}</span>
-        </div>
-        <div class="list-view-pf-additional-info-item">
-           <span ng-hide="item.show">*****</span>
-           <span ng-show="item.show">{{item.data.password}}</span>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <div class="col-md-12">
-    <div pf-toolbar id="exampleToolbar" config="toolbarConfig"></div>
+    <div pf-toolbar config="toolbarConfig"></div>
   </div>
   <hr class="col-md-12">
   <div class="col-md-12">
@@ -55,11 +29,11 @@
   <div class="col-md-12 card-view-container" ng-if="viewType == 'cardView'">
     <div pf-card-view config="vm.listConfig" items="items">
       <div style="text-align: right" class="col-md-12">
-          <a href="#/passwords" clipboard supported="supported" text="item.data.password" ><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+          <a href="#/passwords" clipboard supported="supported" text="item.data.password" on-copied="passwordCopied()" on-error="fail(err)" ><i class="fa fa-clipboard" aria-hidden="true"></i></a>
           <a href="#/passwords/{{item.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
       </div>
       <div class="col-md-12">
-          <img ng-src="{{item.data.logo}}"/>
+          <a href="#/passwords" clipboard supported="supported" text="item.data.password" on-copied="passwordCopied()" on-error="fail(err)" > <img ng-src="{{item.data.logo}}"/></a>
       </div>
       <div class="col-md-12">
         <span>{{item.data.name}}</span>
