@@ -8,7 +8,7 @@
  * Controller of the ulockWebApp
  */
 angular.module('ulockWebApp')
-  .controller('LoginCtrl', function($scope, locker, $location) {
+  .controller('LoginCtrl', function($scope, locker, $location, Notifications) {
 
     $scope.loading = true;
     locker.automaticDecrypt(function(success) {
@@ -16,7 +16,7 @@ angular.module('ulockWebApp')
         $location.path('/passwords');
       }
       else{
-        $scope.loading = false;        
+        $scope.loading = false;
       }
     });
 
@@ -25,7 +25,7 @@ angular.module('ulockWebApp')
         if (success) {
           $location.path('/passwords');
         } else {
-          alert('invalid!');
+          Notifications.warn('Wrong master password!!');
         }
       });
 

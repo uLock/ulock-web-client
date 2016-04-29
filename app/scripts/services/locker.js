@@ -181,7 +181,7 @@ angular.module('ulockWebApp')
             }
             callback(true);
           } catch (ex) {
-            alert('fail to decrypt');
+            callback(false);
           }
 
         } else {
