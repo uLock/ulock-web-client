@@ -27,5 +27,5 @@ angular.element(document).ready(function($http) {
 
 angular.module('services.config', [])
   .constant('configuration', {
-    ulockApi: 'http://localhost:8080'
+    ulockApi: 'https://api.ulock.co'
   });

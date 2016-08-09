@@ -17,20 +17,12 @@ angular.module('ulockWebApp')
       if(values) {
         $scope.allItems = values;
         $scope.items = $scope.allItems;
+        $scope.toolbarConfig.filterConfig.resultsCount = values.length;
       }
     });
 
     var matchesFilter = function(item, filter) {
-      var match = true;
-
-      if (filter.id === 'name') {
-        match = item.data.name.match(filter.value) !== null;
-      } else if (filter.id === 'username') {
-        match = item.data.username === parseInt(filter.value);
-      } else if (filter.id === 'email') {
-        match = item.data.email.match(filter.value) !== null;
-      }
-      return match;
+      return item.data[filter.id].toLowerCase().match(filter.value.toLowerCase()) !== null;
     };
 
     var matchesFilters = function(item, filters) {
