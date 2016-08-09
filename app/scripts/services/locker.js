@@ -68,7 +68,7 @@ angular.module('ulockWebApp')
       });
       decipher.update(forge.util.createBuffer(forge.util.decode64(encryptData.cipher_text)));
       decipher.finish();
-      return decipher.output.toString();
+      return decipher.output.data;
     };
 
     this.decrypt = decrypt;

@@ -44,6 +44,7 @@ angular.module('ulockWebApp')
                passwords.push(locker.decryptEntity(pass));
             } catch (ex) {
               console.error('cannot decrypt entity ' + pass.id);
+              console.error(ex);
             }
           });
           callback(passwords);
