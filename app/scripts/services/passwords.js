@@ -26,6 +26,10 @@ angular.module('ulockWebApp')
       $http.get(configuration.ulockApi + '/passwords/' + id).then(decryptResponse(callback));
     };
 
+    this.delete = function(id, callback) {
+      $http.delete(configuration.ulockApi + '/passwords/' + id).then(callback);
+    };
+
     this.save = function(pass, callback) {
       if (pass.id) {
         $http.put(configuration.ulockApi + '/passwords/' + pass.id, locker.encryptEntity(pass)).then(decryptResponse(callback));

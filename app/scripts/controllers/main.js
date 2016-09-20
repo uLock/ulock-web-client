@@ -12,14 +12,17 @@ angular.module('ulockWebApp')
     $scope.filtersText = '';
     $scope.allItems = [];
     $scope.items = [];
+    var reload = function () {
+      passwords.list(function(values) {
+        if(values) {
+          $scope.allItems = values;
+          $scope.items = $scope.allItems;
+          $scope.toolbarConfig.filterConfig.resultsCount = values.length;
+        }
+      });
+    };
 
-    passwords.list(function(values) {
-      if(values) {
-        $scope.allItems = values;
-        $scope.items = $scope.allItems;
-        $scope.toolbarConfig.filterConfig.resultsCount = values.length;
-      }
-    });
+    reload();
 
     var matchesFilter = function(item, filter) {
       return item.data[filter.id].toLowerCase().match(filter.value.toLowerCase()) !== null;
@@ -139,6 +142,14 @@ angular.module('ulockWebApp')
       $location.path('/passwords/new');
     };
 
+    var selectedItems = [];
+
+    var deleteAction = function(action) {
+      async.each(selectedItems,function(selected,callback) {
+        passwords.delete(selected.id,callback);
+      }, reload)
+    };
+
     $scope.actionsConfig = {
       primaryActions: [{
         name: 'Add',
@@ -148,6 +159,10 @@ angular.module('ulockWebApp')
         name: 'Share',
         title: 'Share a password',
         actionFn: performAction
+      },{
+        name: 'Delete',
+        title: 'Delete passwords',
+        actionFn: deleteAction
       }],
       moreActions: [{
         name: 'Export',
@@ -167,6 +182,24 @@ angular.module('ulockWebApp')
       selectionMatchProp: 'name',
       checkDisabled: false
     };
+
+    var handleCheckBoxChange = function (item) {
+      if(item.selected) {
+        selectedItems.push(item);
+      }
+      else {
+        selectedItems.splice(selectedItems.indexOf(item),1);
+      }
+    };
+
+    $scope.cardConfig = {
+        selectItems: false,
+        multiSelect: false,
+        dblClick: false,
+        checkDisabled: false,
+        showSelectBox: true,
+        onCheckBoxChange: handleCheckBoxChange
+       };
 
     $scope.passwordCopied = function() {
       Notifications.success('Password copied!');

@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="col-md-12 card-view-container" ng-if="viewType == 'cardView'">
-    <div pf-card-view config="vm.listConfig" items="items">
+    <div pf-card-view config="cardConfig" items="items">
       <div style="text-align: right" class="col-md-12">
           <a href="#/passwords" clipboard supported="supported" text="item.data.password" on-copied="passwordCopied()" on-error="fail(err)" ><i class="fa fa-clipboard" aria-hidden="true"></i></a>
           <a href="#/passwords/{{item.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
