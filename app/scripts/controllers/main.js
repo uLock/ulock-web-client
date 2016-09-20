@@ -99,7 +99,7 @@ angular.module('ulockWebApp')
     var compareFn = function(item1, item2) {
       var compValue = 0;
       if ($scope.sortConfig.currentField.id === 'name') {
-        compValue = item1.name.localeCompare(item2.name);
+        compValue = item1.data.name.localeCompare(item2.data.name);
       } else if ($scope.sortConfig.currentField.id === 'username') {
         compValue = item1.data.username - item2.data.username;
       } else if ($scope.sortConfig.currentField.id === 'email') {
@@ -144,10 +144,10 @@ angular.module('ulockWebApp')
 
     var selectedItems = [];
 
-    var deleteAction = function(action) {
+    var deleteAction = function() {
       async.each(selectedItems,function(selected,callback) {
         passwords.delete(selected.id,callback);
-      }, reload)
+      }, reload);
     };
 
     $scope.actionsConfig = {
