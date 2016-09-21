@@ -85,7 +85,7 @@ angular.module('ulockWebApp')
     };
 
     var viewSelected = function(viewId) {
-      $scope.viewType = viewId
+      $scope.viewType = viewId;
     };
 
     $scope.viewsConfig = {
@@ -183,7 +183,7 @@ angular.module('ulockWebApp')
       checkDisabled: false
     };
 
-    var handleCheckBoxChange = function (item) {
+    $scope.handleCheckBoxChange = function (item) {
       if(item.selected) {
         selectedItems.push(item);
       }
@@ -192,14 +192,6 @@ angular.module('ulockWebApp')
       }
     };
 
-    $scope.cardConfig = {
-        selectItems: false,
-        multiSelect: false,
-        dblClick: false,
-        checkDisabled: false,
-        showSelectBox: true,
-        onCheckBoxChange: handleCheckBoxChange
-       };
 
     $scope.passwordCopied = function() {
       Notifications.success('Password copied!');
