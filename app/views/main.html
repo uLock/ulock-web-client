@@ -1,53 +1,10 @@
+<div pf-toast-notification-list notifications="notifications" update-viewing="updateViewing"></div>
+
 <div class="row">
   <div class="col-sm-12">
     <div pf-toolbar config="toolbarConfig"></div>
   </div>
 </div>
-
-<!-- <div class="col-md-12 card-view-container" ng-if="viewType == 'cardView'">
-    <div pf-card-view config="cardConfig" items="items">
-      <div style="text-align: right" class="col-md-12">
-          <a href="#/passwords" clipboard supported="supported" text="item.data.password" on-copied="passwordCopied()" on-error="fail(err)" ><i class="fa fa-clipboard" aria-hidden="true"></i></a>
-          <a href="#/passwords/{{item.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-      </div>
-      <div class="col-md-12">
-          <a href="#/passwords" clipboard supported="supported" text="item.data.password" on-copied="passwordCopied()" on-error="fail(err)" > <img ng-src="{{item.data.logo}}"/></a>
-      </div>
-      <div class="col-md-12">
-        <span>{{item.data.name}}</span>
-      </div>
-      <div class="col-md-12">
-        <span>{{item.data.username}}</span>
-      </div>
-      <div class="col-md-12">
-        <span>{{item.data.email}}</span>
-      </div>
-    </div>
-
-    <div class="card-pf card-pf-view card-pf-view-select card-pf-view-multi-select">
-  <div style="height: 228px;" class="card-pf-body">
-    <div class="card-pf-top-element">
-      <span class="fa fa-birthday-cake card-pf-icon-circle"></span>
-    </div>
-    <h2 class="card-pf-title text-center">
-      Cake Service
-    </h2>
-    <div class="card-pf-items text-center">
-      <div class="card-pf-item">
-        <span class="pficon pficon-screen"></span>
-        <span class="card-pf-item-text">8</span>
-      </div>
-      <div class="card-pf-item">
-        <span class="fa fa-check"></span>
-      </div>
-    </div>
-    <p class="card-pf-info text-center"><strong>Created On</strong> 2015-03-01 02:00 AM <br> Never Expires</p>
-  </div>
-  <div class="card-pf-view-checkbox">
-    <input type="checkbox">
-  </div>
-</div>
-  </div> -->
 
 <div class="row row-cards-pf">
   <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" ng-repeat="item in items">

@@ -8,13 +8,16 @@
  * Controller of the ulockWebApp
  */
 angular.module('ulockWebApp')
-  .controller('MainCtrl', function($scope, pfViewUtils,$location, passwords, Notifications) {
+  .controller('MainCtrl', function($scope, pfViewUtils, $location, passwords, Notifications) {
+
+    $scope.notifications = Notifications.data;
+
     $scope.filtersText = '';
     $scope.allItems = [];
     $scope.items = [];
-    var reload = function () {
+    var reload = function() {
       passwords.list(function(values) {
-        if(values) {
+        if (values) {
           $scope.allItems = values;
           $scope.items = $scope.allItems;
           $scope.toolbarConfig.filterConfig.resultsCount = values.length;
@@ -89,7 +92,7 @@ angular.module('ulockWebApp')
     };
 
     $scope.viewsConfig = {
-      views: [pfViewUtils.getCardView(),pfViewUtils.getListView()],
+      views: [pfViewUtils.getCardView(), pfViewUtils.getListView()],
       onViewSelect: viewSelected
     };
     $scope.viewsConfig.currentView = $scope.viewsConfig.views[0].id;
@@ -145,8 +148,8 @@ angular.module('ulockWebApp')
     var selectedItems = [];
 
     var deleteAction = function() {
-      async.each(selectedItems,function(selected,callback) {
-        passwords.delete(selected.id,callback);
+      async.each(selectedItems, function(selected, callback) {
+        passwords.delete(selected.id, callback);
       }, reload);
     };
 
@@ -159,7 +162,7 @@ angular.module('ulockWebApp')
         name: 'Share',
         title: 'Share a password',
         actionFn: performAction
-      },{
+      }, {
         name: 'Delete',
         title: 'Delete passwords',
         actionFn: deleteAction
@@ -183,18 +186,20 @@ angular.module('ulockWebApp')
       checkDisabled: false
     };
 
-    $scope.handleCheckBoxChange = function (item) {
-      if(item.selected) {
+    $scope.handleCheckBoxChange = function(item) {
+      if (item.selected) {
         selectedItems.push(item);
-      }
-      else {
-        selectedItems.splice(selectedItems.indexOf(item),1);
+      } else {
+        selectedItems.splice(selectedItems.indexOf(item), 1);
       }
     };
 
 
     $scope.passwordCopied = function() {
-      Notifications.success('Password copied!');
+      Notifications.success(
+        'Password copied!'
+      );
+
     };
 
     $scope.fail = function(err) {
