@@ -11,23 +11,56 @@ angular.module('ulockWebApp')
   .controller('LoginCtrl', function($scope, locker, $location, Notifications) {
 
     $scope.loading = true;
-    locker.automaticDecrypt(function(success) {
-      if (success) {
-        $location.path('/passwords');
+    var newUser = true;
+    var message;
+
+    locker.loadUser(function (exist){
+
+      if(exist) {
+        message = 'Enter your master passphrase';
+        newUser = false;
+        locker.automaticDecrypt(function(success) {
+          if (success) {
+            $location.path('/passwords');
+          }
+          else{
+            $scope.loading = false;
+          }
+        });
       }
-      else{
+      else {
         $scope.loading = false;
+        message = 'Enter a complex passphrase to lock your account';
       }
+
     });
 
+    $scope.getMessage = function() {
+      return message;
+    };
+
+    var tmpPass;
     $scope.open = function(masterpassword) {
-      locker.open(masterpassword, true, function(success) {
-        if (success) {
-          $location.path('/passwords');
-        } else {
-          Notifications.warn('Wrong master password!!');
+
+      if(newUser && masterpassword !== tmpPass) {
+        if(!tmpPass) {
+            tmpPass = masterpassword;
         }
-      });
+        $scope.password='';
+        message = "Reenter your passphrase ATTENTION we can't recover your passwords you need to remember the passphrase";
+      }
+      else {
+        locker.open(masterpassword, true, function(success) {
+
+          if (success) {
+            $location.path('/passwords');
+          } else {
+            Notifications.warn('Wrong master passphrase!!');
+          }
+        });
+      }
+
+
 
     };
   });

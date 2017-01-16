@@ -1,5 +1,5 @@
 <form class="form-signin" ng-submit="open(password)" ng-hide="loading">
-  <h2 class="form-signin-heading">Please enter the master password</h2>
+  <h2 class="form-signin-heading">{{getMessage()}}</h2>
   <label for="inputPassword" class="sr-only">Master key</label>
   <input type="password" id="inputPassword" class="form-control" placeholder="Master passphrase" ng-model="password" required>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Decrypt</button>

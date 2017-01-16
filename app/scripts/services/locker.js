@@ -166,41 +166,48 @@ angular.module('ulockWebApp')
       });
     };
 
-    var openLocker = function(masterKey, saveRememberMe, callback) {
+    var encryptSettings;
 
+    var loadUser = function(callback) {
       $http.get(configuration.ulockApi + '/user').then(function success(response) {
-        var encryptSettings = response.data;
-        if (encryptSettings.id) {
-          //try to decrypt data to test the masterPassword
-          try {
-            var decrypted = decryptEntity(encryptSettings, masterKey);
-            var settings = decrypted;
-            sessionStorage.setItem('secret', settings.data.secret);
-            if (saveRememberMe) {
-              createRemenberMe(masterKey);
-            }
-            callback(true);
-          } catch (ex) {
-            callback(false);
-          }
-
-        } else {
-          //new account
-          //TODO add confirm masterKey
-          createNewAccount(masterKey, function(result) {
-            if (result) {
-              createRemenberMe(masterKey);
-            }
-            callback(result);
-          });
-
-        }
+        encryptSettings = response.data;
+        callback(!!encryptSettings.id);
       }, function error(response) {
         callback(false);
       });
-
     };
 
+    var openLocker = function(masterKey, saveRememberMe, callback) {
+
+      if (encryptSettings.id) {
+        //try to decrypt data to test the masterPassword
+        try {
+          var decrypted = decryptEntity(encryptSettings, masterKey);
+          var settings = decrypted;
+          sessionStorage.setItem('secret', settings.data.secret);
+          if (saveRememberMe) {
+            createRemenberMe(masterKey);
+          }
+          callback(true);
+        } catch (ex) {
+          callback(false);
+        }
+
+      } else {
+        //new account
+        //TODO add confirm masterKey
+        createNewAccount(masterKey, function(result) {
+          if (result) {
+            createRemenberMe(masterKey);
+          }
+          callback(result);
+        });
+
+      }
+
+
+    };
+    this.loadUser = loadUser;
     this.open = openLocker;
 
   });
