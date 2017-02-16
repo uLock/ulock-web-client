@@ -43,6 +43,16 @@ ulockWebApp.config(function($routeProvider) {
       controller: 'GeneratorCtrl',
       controllerAs: 'generator'
     })
+    .when('/groups', {
+      templateUrl: 'views/groups.html',
+      controller: 'GroupsCtrl',
+      controllerAs: 'groups'
+    })
+    .when('/groups/:id', {
+      templateUrl: 'views/group.html',
+      controller: 'GroupCtrl',
+      controllerAs: 'group'
+    })
     .otherwise({
       redirectTo: '/passwords'
     });
@@ -86,7 +96,7 @@ ulockWebApp.factory('authInterceptor', function($q, Auth) {
         logout();
       } else if (response.status == 403) {
         alert("Forbidden");
-      } 
+      }
       // return $q.reject(response);
       return response;
     }

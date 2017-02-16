@@ -12,8 +12,8 @@
     "ng-csv": "~0.3.6",
     "forge-dist": "0.6.38.dist",
     "angular-clipboard": "~1.4.1",
-    "patternfly": "~3.10.0",
-    "angular-patternfly": "~3.10.0",
+    "patternfly": "~3.19.0",
+    "angular-patternfly": "~3.19.0",
     "SpinKit": "spinkit#~1.2.5",
     "async": "~2.0.1",
     "password-generator": "~2.0.2"

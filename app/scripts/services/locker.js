@@ -91,11 +91,18 @@ angular.module('ulockWebApp')
       }
 
       var newEntity = angular.copy(entity);
-      newEntity.data = JSON.parse(decrypt(entity.data, secret));
+      var decryptString = decrypt(entity.data, secret);
+      newEntity.data = JSON.parse(decryptString);
       return newEntity;
     };
 
     this.decryptEntity = decryptEntity;
+
+    this.createSecret = function() {
+      var bytes = forge.random.getBytesSync(32);
+      var secret = forge.util.bytesToHex(bytes);
+      return secret;
+    };
 
     var createNewAccount = function(masterKey, callback) {
 
