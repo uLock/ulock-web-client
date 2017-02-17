@@ -8,7 +8,7 @@
  * Controller of the ulockWebApp
  */
 angular.module('ulockWebApp')
-  .controller('LoginCtrl', function($scope, locker, $location, Notifications) {
+  .controller('LoginCtrl', function(Auth, $scope, locker, $location, Notifications) {
 
     $scope.loading = true;
     var newUser = true;
@@ -19,7 +19,7 @@ angular.module('ulockWebApp')
       if(exist) {
         message = 'Enter your master passphrase';
         newUser = false;
-        locker.automaticDecrypt(function(success) {
+        locker.automaticDecrypt(Auth.profile, function(success) {
           if (success) {
             $location.path('/passwords');
           }
@@ -47,10 +47,10 @@ angular.module('ulockWebApp')
             tmpPass = masterpassword;
         }
         $scope.password='';
-        message = "Reenter your passphrase ATTENTION we can't recover your passwords you need to remember the passphrase";
+        message = "Reenter your passphrase we can't recover your passwords you need to remember the passphrase";
       }
       else {
-        locker.open(masterpassword, true, function(success) {
+        locker.open(Auth.profile, masterpassword, true, function(success) {
 
           if (success) {
             $location.path('/passwords');

@@ -3,7 +3,7 @@
 var auth = {};
 
 angular.element(document).ready(function($http) {
-  var keycloakAuth = new Keycloak('keycloak-dev.json');
+  var keycloakAuth = new Keycloak('keycloak.json');
   auth.loggedIn = false;
 
   keycloakAuth.init({
