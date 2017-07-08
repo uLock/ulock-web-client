@@ -8,7 +8,7 @@
  * Controller of the ulockWebApp
  */
 angular.module('ulockWebApp')
-  .controller('GroupCtrl', function ($routeParams, $scope, $location, $http, groups, locker) {
+  .controller('GroupCtrl', function($routeParams, $scope, $location, $http, groups, locker, users) {
     var groupId = $routeParams.id;
 
     if (groupId === 'new') {
@@ -21,7 +21,7 @@ angular.module('ulockWebApp')
     }
 
     $scope.save = function(group) {
-      if(!group.id) {
+      if (!group.id) {
         var secret = locker.createSecret();
         group.data = {
           secret: secret
@@ -37,4 +37,11 @@ angular.module('ulockWebApp')
     $scope.cancel = function() {
       $location.path('/groups');
     };
+
+    $scope.addMember = function(email) {
+      users.get(email,function(user){
+        console.log(user);
+      });
+    };
+
   });
